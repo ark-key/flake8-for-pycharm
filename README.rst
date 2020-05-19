@@ -28,7 +28,7 @@ Output should look like that:
 Usage
 -----
 1. Locate the file `flake8_pycharm.py` in your python environment (in linux use command `which flake8_pycharm.py`)
-2. In Pycharm go to File -> Settings -> Pylint
+2. In Pycharm go to File -> Settings -> Pylint (If you can't find it, go to Settings -> Plugins and install pylint plugin)
 3. In "Path to Pylint executable", provide path to "flake8_pycharm.py" script
 4. [ *Optional* ] In path to pylintrc, provide path to your flake8 configuration file
 5. Do not put anything in the "Arguments" field or script won't work.
