@@ -1,4 +1,4 @@
-Flake8-JSON
+Flake8-For-Pycharm
 ===========
 
 This is a plugin for Flake8 that will emulate pylint json output.
@@ -43,7 +43,7 @@ Initially Pycharm call pylint with the following arguments
 
     pylint --help-msg=E1101
 
-Once this command has succeeded, it assumed that pylint is installed and continue using it with command like that.
+Once this command has succeeded, it assumes that pylint is installed and starts using it with command like that.
 
 .. code-block:: bash
 
