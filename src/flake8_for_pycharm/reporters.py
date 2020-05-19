@@ -1,13 +1,15 @@
-"""Module containing all of the JSON reporters for Flake8."""
-from __future__ import print_function, unicode_literals
-
+"""
+Reporter implementation for pycharm compatible flake8 output
+"""
 import json
 
 from flake8.formatting import base
 
 
 class DefaultJSON(base.BaseFormatter):
-    """The non-pretty-printing JSON formatter."""
+    """
+    Default output class for this reporter
+    """
 
     def __init__(self, options):
 
@@ -32,36 +34,24 @@ class DefaultJSON(base.BaseFormatter):
         self.first_error = True
         self.write_line('[')
 
-    def dictionary_from(self, violation):
-        """Convert a Violation to a dictionary."""
-        return {
-            key: getattr(violation, key)
-            for key in [
-                'code',
-                'filename',
-                'line_number',
-                'column_number',
-                'text',
-                'physical_line',
-            ]
-        }
-
-    def format(self, violation):
+    def format(self, error):
         """Format a violation."""
         formatted = {
             "type": "warning",
             "module": "",
             "obj": "",
-            "line": violation.line_number,
-            "column": violation.column_number,
-            "path": violation.filename,
-            "symbol": violation.code,
-            "message": violation.text,
-            "message-id": violation.code
+            "line": error.line_number,
+            "column": error.column_number,
+            "path": error.filename,
+            "symbol": error.code,
+            "message": error.text,
+            "message-id": error.code,
         }
         # Pycharm doesn't like when error's column number exceed line's length
-        max_line_length = len(violation.physical_line)
-        if violation.column_number >= max_line_length:
+        max_line_length = 999
+        if error.physical_line:
+            max_line_length = len(error.physical_line)
+        if error.column_number >= max_line_length:
             formatted["column"] = max_line_length - 1
         # Convert to json and return
         formatted = json.dumps(formatted)
