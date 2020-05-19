@@ -1,17 +1,14 @@
 Flake8-JSON
 ===========
 
-This is a plugin for Flake8 that will format the output as JSON. By default,
-the output is **not** pretty-printed. We would love to add that as a separate
-formatter option, though.
-
+This is a plugin for Flake8 that will emulate pylint json output.
 
 Installation
 ------------
 
 .. code-block:: bash
 
-    pip install flake8-json
+    pip install 
 
 
 Usage
