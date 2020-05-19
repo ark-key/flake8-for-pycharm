@@ -8,7 +8,7 @@ Installation
 
 .. code-block:: bash
 
-    pip install git+https://gitlab.com/ramast/flake8-json.git#egg=flake8-for-pycharm
+    pip install git+https://gitlab.com/ramast/flake8-for-pycharm.git#egg=flake8-for-pycharm
 
 Make sure you have flake8 installed in the same enviroment.
 
