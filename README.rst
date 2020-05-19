@@ -8,29 +8,55 @@ Installation
 
 .. code-block:: bash
 
-    pip install 
+    pip install git+https://gitlab.com/ramast/flake8-json.git#egg=flake8-for-pycharm
 
-
-Usage
------
+Make sure you have flake8 installed in the same enviroment.
 
 .. code-block:: bash
 
-    flake8 --format=json ...
+    pip install flake8
 
+To validate installation run `flake8_pycharm.py --help-msg=E1101`.
+Output should look like that:
 
-Competitors
------------
+.. code-block::
 
-None that I could find on PyPI
+    :no-member (E1101): *%s %r has no %r member%s*
+    Used when a variable is accessed for an unexistent member. This message
+    belongs to the typecheck checker.
 
+Usage
+-----
+1. Locate the file `flake8_pycharm.py` in your python environment (in linux use command `which flake8_pycharm.py`)
+2. In Pycharm go to File -> Settings -> Pylint
+3. In "Path to Pylint executable", provide path to "flake8_pycharm.py" script
+4. [ *Optional* ] In path to pylintrc, provide path to your flake8 configuration file
+5. Do not put anything in the "Arguments" field or script won't work.
+6. This is it, youa re basically done.
 
-Maintenance Policy
-------------------
+How does it work?
+-----------------
 
-This project is seeking maintainers. Please open an issue if you're interested
-and ensure that you've read the PyCQA's `Code of Conduct`_.
+Initially Pycharm call pylint with the following arguments
 
+.. code-block:: bash
 
-.. _Code of Conduct:
-    http://meta.pycqa.org/en/latest/code-of-conduct.html
+    pylint --help-msg=E1101
+
+Once this command has succeeded, it assumed that pylint is installed and continue using it with command like that.
+
+.. code-block:: bash
+
+    pylint --rcfile=pylintrc -f json my_file.py
+
+The `flake8_pycharm.py` script understand those pylint arguments,
+query flake8 accordingly and return result in same format that pylint produces.
+
+Troubleshooting
+---------------
+
+If you received errors from pycharm, you can try to run the command manually to see if it's producing errors.
+
+.. code-block:: bash
+
+    flake8_pycharm.py --rcfile=<your flake8 configuration> -f json my_file.py
