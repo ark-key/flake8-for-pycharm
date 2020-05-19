@@ -40,8 +40,4 @@ if args.rcfile:
 
 flake8_args += args.files
 
-with open("/home/ramast/f", "a") as log_file:
-    log_file.write("%s\n" % flake8_args)
-flake8_args.append("--tee /home/ramast/ff")
-
 os.execv(get_flake8_executable_filename(), flake8_args)  # noqa: S606
