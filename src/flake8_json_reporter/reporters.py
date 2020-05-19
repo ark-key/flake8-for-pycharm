@@ -9,9 +9,11 @@ from flake8.formatting import base
 class DefaultJSON(base.BaseFormatter):
     """The non-pretty-printing JSON formatter."""
 
-    def after_init(self):
-        """Force newline to be empty."""
+    def __init__(self, options):
+
         self.newline = ''
+        self.first_error: bool = True
+        super(DefaultJSON, self).__init__(options)
 
     def _write(self, output):
         if self.output_fd is not None:
@@ -23,29 +25,12 @@ class DefaultJSON(base.BaseFormatter):
         """Override write for convenience."""
         self.write(line, None)
 
-    def start(self):
-        """Override the default to start printing JSON."""
-        super(DefaultJSON, self).start()
-        self.write_line('{')
-        self.files_reported_count = 0
-
     def stop(self):
-        """Override the default to finish printing JSON."""
-        self.write_line('}')
-
-    def beginning(self, filename):
-        """We're starting a new file."""
-        json_filename = json.dumps(filename)
-        if self.files_reported_count > 0:
-            self.write_line(', {}: ['.format(json_filename))
-        else:
-            self.write_line('{}: ['.format(json_filename))
-        self.reported_errors_count = 0
-
-    def finished(self, filename):
-        """We've finished processing a file."""
-        self.files_reported_count += 1
         self.write_line(']')
+
+    def start(self):
+        self.first_error = True
+        self.write_line('[')
 
     def dictionary_from(self, violation):
         """Convert a Violation to a dictionary."""
@@ -63,9 +48,25 @@ class DefaultJSON(base.BaseFormatter):
 
     def format(self, violation):
         """Format a violation."""
-        formatted = json.dumps(self.dictionary_from(violation))
-        if self.reported_errors_count > 0:
-            self.write_line(', {}'.format(formatted))
-        else:
+        formatted = {
+            "type": "warning",
+            "module": "",
+            "obj": "",
+            "line": violation.line_number,
+            "column": violation.column_number,
+            "path": violation.filename,
+            "symbol": violation.code,
+            "message": violation.text,
+            "message-id": violation.code
+        }
+        # Pycharm doesn't like when error's column number exceed line's length
+        max_line_length = len(violation.physical_line)
+        if violation.column_number >= max_line_length:
+            formatted["column"] = max_line_length - 1
+        # Convert to json and return
+        formatted = json.dumps(formatted)
+        if self.first_error:
             self.write_line(formatted)
-        self.reported_errors_count += 1
+            self.first_error = False
+        else:
+            self.write_line(", {}".format(formatted))
