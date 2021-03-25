@@ -44,7 +44,7 @@ class DefaultJSON(base.BaseFormatter):
             "column": error.column_number,
             "path": error.filename,
             "symbol": error.code,
-            "message": error.text,
+            "message": f"[{error.code}] {error.text}",
             "message-id": error.code,
         }
         # Pycharm doesn't like when error's column number exceed line's length
