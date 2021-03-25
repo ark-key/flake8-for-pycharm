@@ -55,6 +55,9 @@ query flake8 accordingly and return result in same format that pylint produces.
 Troubleshooting
 ---------------
 
+If you did everything correctly but pycharm kept complaining about pylint being not installed, you might have to install it anyway.
+It's a bug reported by a colleague but I wasn't able to reproduce it locallay.
+
 If you received errors from pycharm, you can try to run the command manually to see if it's producing errors.
 
 .. code-block:: bash
