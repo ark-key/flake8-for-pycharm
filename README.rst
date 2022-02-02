@@ -25,6 +25,14 @@ Output should look like that:
     Used when a variable is accessed for an unexistent member. This message
     belongs to the typecheck checker.
 
+Unfortunately pycharm's pylint plugin explicitly checks
+if pylint is installed so, - even though we don't need it - you'd still need to install it.
+
+.. code-block:: bash
+
+    pip install pylint
+
+
 Usage
 -----
 1. Locate the file `flake8_pycharm.py` in your python environment (in linux use command `which flake8_pycharm.py`)
