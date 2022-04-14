@@ -1,5 +1,5 @@
 Flake8-For-Pycharm
-===========
+==================
 
 This is a plugin for Flake8 that will emulate pylint json output.
 
@@ -8,14 +8,9 @@ Installation
 
 .. code-block:: bash
 
-    pip install git+https://gitlab.com/ramast/flake8-for-pycharm.git#egg=flake8-for-pycharm
+    pip install flake8-for-pycharm
 
-Make sure you have flake8 installed in the same enviroment.
-
-.. code-block:: bash
-
-    pip install flake8
-
+flake8 will be automaitcally installed in the same enviroment.
 To validate installation run `flake8_pycharm.py --help-msg=E1101`.
 Output should look like that:
 
@@ -25,13 +20,7 @@ Output should look like that:
     Used when a variable is accessed for an unexistent member. This message
     belongs to the typecheck checker.
 
-Unfortunately pycharm's pylint plugin explicitly checks
-if pylint is installed so, - even though we don't need it - you'd still need to install it.
-
-.. code-block:: bash
-
-    pip install pylint
-
+pylint will also be installed because pycharm plugin refuses to work if it's not installed.
 
 Usage
 -----
